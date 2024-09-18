@@ -387,6 +387,7 @@ module DEBUGGER__
       @local_addr = nil
       @host = host || CONFIG[:host]
       @port_save_file = nil
+      @proc_regex = CONFIG[:proc_regex]
       @port = begin
         port_str = (port && port.to_s) || CONFIG[:port] || raise("Specify listening port by RUBY_DEBUG_PORT environment variable.")
         case port_str
@@ -418,6 +419,14 @@ module DEBUGGER__
     end
 
     def accept
+      if @proc_regex
+        begin
+          return unless Regexp.new(@proc_regex).match($0)
+        rescue RegexpError => e
+          DEBUGGER__.warn "Invalid regex: #{e.message}"
+        end
+      end
+
       retry_cnt = 0
       super # for fork
 

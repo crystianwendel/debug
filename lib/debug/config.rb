@@ -45,6 +45,7 @@ module DEBUGGER__
     open:           ['RUBY_DEBUG_OPEN',         "REMOTE: Open remote port (same as `rdbg --open` option)"],
     port:           ['RUBY_DEBUG_PORT',         "REMOTE: TCP/IP remote debugging: port"],
     host:           ['RUBY_DEBUG_HOST',         "REMOTE: TCP/IP remote debugging: host", :string, "127.0.0.1"],
+    proc_regex:     ['RUBY_DEBUG_PROC_REGEX',   "REMOTE: REGEX to match process name for openning port"],
     sock_path:      ['RUBY_DEBUG_SOCK_PATH',    "REMOTE: UNIX Domain Socket remote debugging: socket path"],
     sock_dir:       ['RUBY_DEBUG_SOCK_DIR',     "REMOTE: UNIX Domain Socket remote debugging: socket directory"],
     local_fs_map:   ['RUBY_DEBUG_LOCAL_FS_MAP', "REMOTE: Specify local fs map", :path_map],
@@ -354,6 +355,9 @@ module DEBUGGER__
         end
         o.on('--host=HOST', 'Listening TCP/IP host') do |host|
           config[:host] = host
+        end
+        o.on('--proc_regex=REGEX', 'Listening TCP/IP port only when process matches') do |regex|
+          config[:proc_regex] = regex
         end
         o.on('--cookie=COOKIE', 'Set a cookie for connection') do |c|
           config[:cookie] = c

@@ -500,6 +500,7 @@ config set no_color true
   * `RUBY_DEBUG_OPEN` (`open`): Open remote port (same as `rdbg --open` option)
   * `RUBY_DEBUG_PORT` (`port`): TCP/IP remote debugging: port
   * `RUBY_DEBUG_HOST` (`host`): TCP/IP remote debugging: host (default: 127.0.0.1)
+  * `RUBY_DEBUG_PROC_REGEX` (`proc_regex`): REGEX to match process name for openning port
   * `RUBY_DEBUG_SOCK_PATH` (`sock_path`): UNIX Domain Socket remote debugging: socket path
   * `RUBY_DEBUG_SOCK_DIR` (`sock_dir`): UNIX Domain Socket remote debugging: socket directory
   * `RUBY_DEBUG_LOCAL_FS_MAP` (`local_fs_map`): Specify local fs map
@@ -908,6 +909,7 @@ Debug console mode:
         --sock-path=SOCK_PATH        UNIX Domain socket path
         --port=PORT                  Listening TCP/IP port
         --host=HOST                  Listening TCP/IP host
+        --proc_regex=REGEX           Listening TCP/IP port only when process matches
         --cookie=COOKIE              Set a cookie for connection
         --session-name=NAME          Session name
 

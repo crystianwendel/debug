@@ -421,6 +421,7 @@ module DEBUGGER__
     def accept
       if @proc_regex
         begin
+          sleep 0.5
           if Regexp.new(@proc_regex).match($0)
             DEBUGGER__.warn "Process info (#{$0}) matches #{@proc_regex}"
           else

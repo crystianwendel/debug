@@ -421,7 +421,12 @@ module DEBUGGER__
     def accept
       if @proc_regex
         begin
-          return unless Regexp.new(@proc_regex).match($0)
+          if Regexp.new(@proc_regex).match($0)
+            DEBUGGER__.warn "Process info (#{$0}) matches #{@proc_regex}"
+          else
+            DEBUGGER__.warn "Process info (#{$0}) does not match #{@proc_regex}"
+            return
+          end
         rescue RegexpError => e
           DEBUGGER__.warn "Invalid regex: #{e.message}"
         end

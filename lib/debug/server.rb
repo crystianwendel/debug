@@ -382,6 +382,12 @@ module DEBUGGER__
     end
   end
 
+  require 'singleton'
+  class InitialProcInfo
+    include Singleton
+    attr_accessor :info
+  end
+
   class UI_TcpServer < UI_ServerBase
     def initialize host: nil, port: nil
       @local_addr = nil
@@ -421,7 +427,15 @@ module DEBUGGER__
     def accept
       if @proc_regex
         begin
-          sleep 0.5
+          if InitialProcInfo.instance.info.nil?
+            InitialProcInfo.instance.info = $0
+          else
+            start_time = Time.now
+            while $0 == InitialProcInfo.instance.info
+              sleep 0.1
+              break if Time.now - start_time > 5.seconds
+            end
+          end
           if Regexp.new(@proc_regex).match($0)
             DEBUGGER__.warn "Process info (#{$0}) matches #{@proc_regex}"
           else
